@@ -1,8 +1,8 @@
 
 import React, { useState, useCallback, useEffect } from 'react';
-import { GameState, GameData } from './types';
-import HangmanDrawing from './components/HangmanDrawing';
-import Keyboard from './components/Keyboard';
+import { GameState, GameData } from './types.ts';
+import HangmanDrawing from './components/HangmanDrawing.tsx';
+import Keyboard from './components/Keyboard.tsx';
 
 const MAX_WORD_LENGTH = 18;
 const MAX_TOTAL_LENGTH = 48;
@@ -13,7 +13,6 @@ const App: React.FC = () => {
   const [guessedLetters, setGuessedLetters] = useState<string[]>([]);
   const [setupError, setSetupError] = useState<string | null>(null);
 
-  // Derive status
   const wrongLetters = guessedLetters.filter(l => !gameData.word.includes(l));
   const correctLetters = guessedLetters.filter(l => gameData.word.includes(l));
   const isWinner = gameData.word.length > 0 && gameData.word.split('').every(l => l === ' ' || guessedLetters.includes(l));
@@ -69,7 +68,6 @@ const App: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col items-center p-4 select-none">
-      {/* Header */}
       <header className="w-full max-w-5xl py-8 flex flex-col items-center">
         <h1 className="text-4xl md:text-6xl font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-cyan-400 mb-2 text-center uppercase">
           Elite Hangman
@@ -78,8 +76,6 @@ const App: React.FC = () => {
       </header>
 
       <main className="w-full max-w-4xl flex-grow flex flex-col items-center justify-center">
-        
-        {/* Lobby State */}
         {gameState === 'LOBBY' && (
           <div className="flex flex-col gap-6 w-full max-w-sm">
             <button 
@@ -95,7 +91,6 @@ const App: React.FC = () => {
           </div>
         )}
 
-        {/* Setup State */}
         {gameState === 'SETUP' && (
           <form onSubmit={finalizeSetup} className="w-full max-w-md bg-slate-900/50 p-8 rounded-3xl border border-slate-800 shadow-2xl space-y-6">
             <h2 className="text-2xl font-bold text-center text-indigo-300">Create Challenge</h2>
@@ -149,15 +144,12 @@ const App: React.FC = () => {
           </form>
         )}
 
-        {/* Playing & Result State */}
         {(gameState === 'PLAYING' || gameState === 'RESULT') && (
           <div className="w-full flex flex-col items-center">
-            
             <div className="flex flex-col lg:flex-row gap-12 items-center justify-center w-full mb-12">
               <div className="scale-90 md:scale-100">
                 <HangmanDrawing wrongGuesses={wrongLetters.length} />
               </div>
-              
               <div className="flex flex-col items-center lg:items-start text-center lg:text-left gap-4 max-w-full">
                 <div className="space-y-1">
                   {gameData.category && (
@@ -167,7 +159,6 @@ const App: React.FC = () => {
                   )}
                   <h2 className="text-2xl md:text-3xl font-bold text-slate-200">Solve the Puzzle</h2>
                 </div>
-
                 <div className="flex flex-wrap gap-x-8 gap-y-6 justify-center lg:justify-start max-w-2xl px-4 md:px-0">
                   {gameData.word.split(' ').map((word, wordIdx) => (
                     <div key={wordIdx} className="flex gap-1.5 md:gap-2">
@@ -185,7 +176,6 @@ const App: React.FC = () => {
                     </div>
                   ))}
                 </div>
-
                 {gameData.clue && (
                   <div className="mt-4 w-full max-w-sm bg-slate-900/40 p-4 rounded-xl border border-slate-800">
                     <p className="text-slate-400 italic text-sm">
@@ -196,9 +186,8 @@ const App: React.FC = () => {
               </div>
             </div>
 
-            {/* Result Overlays */}
             {gameState === 'RESULT' && (
-              <div className="mb-8 p-6 rounded-2xl bg-slate-900 border-2 border-slate-800 shadow-2xl flex flex-col items-center animate-in fade-in zoom-in duration-300">
+              <div className="mb-8 p-6 rounded-2xl bg-slate-900 border-2 border-slate-800 shadow-2xl flex flex-col items-center">
                 {isWinner ? (
                   <>
                     <div className="text-5xl mb-2">🎉</div>
@@ -236,7 +225,6 @@ const App: React.FC = () => {
         )}
       </main>
 
-      {/* Footer Branding */}
       <footer className="w-full max-w-5xl py-8 flex justify-between items-center opacity-40 px-4">
         <span className="text-[10px] font-mono uppercase">Word_Wrap_Protection: Active</span>
         <span className="text-[10px] font-mono uppercase tracking-widest">Handcrafted Experience</span>

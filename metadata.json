@@ -1,5 +1,5 @@
 {
-  "name": "Gemini Hangman Elite",
-  "description": "A sophisticated Hangman-style word guessing game featuring local multiplayer setup and AI-powered challenge generation using the Gemini API.",
+  "name": "Elite Hangman",
+  "description": "A sophisticated local multiplayer Hangman-style word guessing game.",
   "requestFramePermissions": []
 }
